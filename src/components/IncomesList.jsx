@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
-import EditIncome from './EditIncome'; // Update to use EditIncome
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 export default function IncomesList() {
   const [incomes, setIncomes] = useState([]);
-  const [selectedIncome, setSelectedIncome] = useState(null);
 
+  // Initialize useNavigate
+  const navigate = useNavigate()
+
+  // Handle Add button
+  const handleAddClick = () => {
+    // Navigate to addTransaction page
+    navigate('/add-transaction')
+  };
+
+  // Handle Edit button
   const handleEditClick = (income) => {
-    console.log('Selected Income: ', income)
-    setSelectedIncome(income);
+    navigate(`/edit-transaction/${income._id}`);
   };
 
   useEffect(() => {
@@ -29,7 +37,12 @@ export default function IncomesList() {
     <div className=''>
       <div className='py-6 flex flex-row bg-[#f3f4f6]'>
         <h2 className='mx-4'>Income</h2><p className='mx-2'>in July 2024</p>
-        <button>Search ..</button>
+        <button 
+          onClick={handleAddClick}
+          className='font-bold text-blue-500'
+        >
+          ADD
+        </button>
       </div>
       <div className='overflow-y-auto max-h-[300px]'> {/* Set a fixed height and enable vertical scrolling */}
         <table className='min-w-full divide-y divide-gray-200'>
@@ -52,12 +65,12 @@ export default function IncomesList() {
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{income.description}</td>
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{income.wallet_id}</td>
                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-                  <Popover>
-                    <PopoverButton onClick={() => handleEditClick(income)} className='font-bold text-blue-500'>EDIT</PopoverButton>
-                    <PopoverPanel className="absolute z-10 left-1/2 w-96 bg-white p-4 shadow-md rounded">
-                      <EditIncome {...selectedIncome} />
-                    </PopoverPanel>
-                  </Popover>
+                  <button 
+                    onClick={() => handleEditClick(income)}
+                    className='font-bold text-blue-500'
+                  >
+                    EDIT
+                  </button>
                 </td>
               </tr>
             ))}
