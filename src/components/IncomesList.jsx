@@ -12,7 +12,7 @@ export default function IncomesList() {
   // Handle Add button
   const handleAddClick = () => {
     // Navigate to addTransaction page
-    navigate('/add-transaction')
+    navigate('/add-income')
   };
 
   // Handle Edit button

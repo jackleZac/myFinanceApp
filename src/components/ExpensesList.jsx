@@ -34,13 +34,17 @@ export default function ExpensesList() {
   return (
     <div className=''>
       <div className='py-6 flex flex-row bg-[#f3f4f6]'>
-        <h2 className='mx-4'>Transaction</h2><p className='mx-2'>in July 2024</p>
+        <div className='basis-3/4'>
+          <h2 className='mx-4'>Transaction</h2><p className='mx-2'>in July 2024</p>
+        </div>
+        <div className='basis-1/4'>
         <button 
           onClick={handleAddClick}
-          className='font-bold text-blue-500'
+          className='inset-x-0 w-24 px-2 py-4 font-bold text-blue-500'
         >
           ADD
         </button>
+        </div>
       </div>
       <div className='overflow-y-auto max-h-[300px]'> {/* Set a fixed height and enable vertical scrolling */}
         <table className='min-w-full divide-y divide-gray-200'>

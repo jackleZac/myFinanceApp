@@ -71,10 +71,10 @@ export default function AddExpense() {
   }
 
   return (
-    <div>
+    <div className='grid grid-cols-1'>
       <button 
           onClick={handleExitClick}
-          className='font-bold text-blue-500'
+          className='block px-4 py-6 my-10 w-36 font-bold text-blue-500 text-lg'
         >
           Return
       </button>
@@ -83,7 +83,7 @@ export default function AddExpense() {
           e.preventDefault();
           handleSave();
         }}
-        className='w-96 grid grid-cols-1 gap-4'
+        className='w-96 mx-auto px-8 py-12 grid grid-cols-1 gap-4 border-2 border-gray-100 rounded-lg shadow-lg'
       >
         <label className='block text-sm font-medium text-gray-700'>
           Date:
