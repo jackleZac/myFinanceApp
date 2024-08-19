@@ -20,7 +20,7 @@ export default function Sidebar() {
 
   return (
     <div className="flex">
-      <Disclosure as="nav" className="bg-gray-800 w-64 min-h-screen">
+      <Disclosure as="nav" className="bg-cyan-950 w-64 min-h-screen">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-center p-4">
             <img
@@ -36,7 +36,7 @@ export default function Sidebar() {
                 to={item.href}
                 aria-current={item.href === currentPath ? 'page' : undefined}
                 className={classNames(
-                  item.href === currentPath ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                  item.href === currentPath ? 'bg-slate-900 text-white' : 'text-gray-300 hover:bg-cyan-900 hover:text-white',
                   'block rounded-md px-3 py-2 text-base font-medium'
                 )}
               >

@@ -35,12 +35,11 @@ export default function ExpensesList() {
     <div className=''>
       <div className='py-6 flex justify-between items-center bg-[#f3f4f6] px-4'>
         <div>
-          <h2 className='text-lg font-semibold text-gray-800'>Transaction</h2>
+          <h2 className='text-lg font-semibold text-gray-800'>Incomes</h2>
           <p className='text-sm text-gray-500'>in July 2024</p>
         </div>
         <button 
           onClick={handleAddClick}
-          className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-200'
         >
           ADD
         </button>
