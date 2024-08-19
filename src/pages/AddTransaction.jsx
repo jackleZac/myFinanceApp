@@ -91,7 +91,7 @@ export default function AddExpense() {
             type='date'
             value={newExpenseDetails.date}
             onChange={(e) => setNewExpenseDetails({ ...newExpenseDetails, date: e.target.value })}
-            className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+            className='mt-1 px-2 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
           />
         </label>
 
@@ -141,7 +141,7 @@ export default function AddExpense() {
             type='number'
             value={newExpenseDetails.amount}
             onChange={(e) => setNewExpenseDetails({ ...newExpenseDetails, amount: e.target.value })}
-            className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+            className='mt-1 px-2 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
           />
         </label>
 
@@ -151,7 +151,7 @@ export default function AddExpense() {
             type='text'
             value={newExpenseDetails.description}
             onChange={(e) => setNewExpenseDetails({ ...newExpenseDetails, description: e.target.value })}
-            className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+            className='mt-1 px-2 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
           />
         </label>
 

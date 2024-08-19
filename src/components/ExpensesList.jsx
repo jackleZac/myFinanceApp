@@ -40,6 +40,7 @@ export default function ExpensesList() {
         </div>
         <button 
           onClick={handleAddClick}
+          className='bg-cyan-700 hover:bg-cyan-800 text-white px-4 py-2 rounded-lg transition-all duration-200'
         >
           ADD
         </button>
