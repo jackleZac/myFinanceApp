@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { ArrowLeftIcon ,CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+
 
 export default function AddIncome() {
   const [newIncomeDetails, setNewIncomeDetails] = useState({
@@ -57,9 +58,9 @@ export default function AddIncome() {
     <div className='grid grid-cols-1'>
       <button 
           onClick={handleExitClick}
-          className='block px-4 py-6 my-10 w-36 font-bold text-blue-500 text-lg'
+          className='w-24 py-4 px-2 ml-24 mt-12 flex flex-rows text-blue-500'
         >
-          Return
+          <ArrowLeftIcon className='size-6 mx-2'/><p className='block font-medium text-md hover:underline'>Back</p>
       </button>
       <form
         onSubmit={(e) => {
