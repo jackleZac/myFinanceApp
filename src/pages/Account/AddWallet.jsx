@@ -44,7 +44,6 @@ export default function AddWallet() {
     try {
       await axios.post('http://localhost:5000/wallet', newDetails);
       console.log('Wallet saved:', newDetails);
-      navigate('/wallets'); // Navigate to the wallets list or appropriate page after saving
     } catch (error) {
       console.error('Error saving wallet:', error);
     } finally {
@@ -54,7 +53,7 @@ export default function AddWallet() {
 
   // Handle exits page button
   const handleExitClick = () => {
-    navigate('/wallets');
+    navigate('/');
   };
 
   return (

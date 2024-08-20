@@ -5,25 +5,31 @@ import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@h
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 const categories = [
-  { id: 1, name: 'Salary', avatar: '' },
-  { id: 2, name: 'Investment', avatar: '' },
-  { id: 3, name: 'Freelancing', avatar: '' },
-  { id: 4, name: 'Gifts', avatar: '' },
-  { id: 5, name: 'Other', avatar: '' },
-  // Add or modify categories based on your needs
+  { id: 1, name: 'Housing', avatar: '' },
+  { id: 2, name: 'Transportation', avatar: '' },
+  { id: 3, name: 'Grocery', avatar: '' },
+  { id: 4, name: 'Health & Wellness', avatar: '' },
+  { id: 5, name: 'Insurance', avatar: '' },
+  { id: 6, name: 'Debt Payments', avatar: '' },
+  { id: 7, name: 'Savings & Investments', avatar: '' },
+  { id: 8, name: 'Entertainment', avatar: '' },
+  { id: 9, name: 'Education', avatar: '' },
+  { id: 10, name: 'Family & Childcare', avatar: '' },
+  { id: 11, name: 'Gifts & Donations', avatar: '' },
+  { id: 12, name: 'Miscellaneous', avatar: '' },
 ];
 
-export default function EditIncome() {
+export default function EditExpense() {
   const location = useLocation();
   const navigate = useNavigate();
   // Access the passed expense object
-  const { income } = location.state;
+  const { expense } = location.state;
   // Keep the initial details intact
-  const [incomeDetails, setIncomeDetails] = useState(income)
-  console.log('Details of selected income: ', incomeDetails)
+  const [expenseDetails, setExpenseDetails] = useState(expense)
+  console.log('Details of selected expense: ', expenseDetails)
 
   // Create a copy for updates
-  const [updatedIncomeDetails, setUpdatedIncomeDetails] = useState({ ...income });
+  const [updatedExpenseDetails, setUpdatedExpenseDetails] = useState({ ...expense });
 
   // Get the details of selected category
   const [selectedCategory, setSelectedCategory] = useState([])
@@ -35,11 +41,16 @@ export default function EditIncome() {
   const [selectedWallet, setSelectedWallet] = useState([])
   console.log(selectedWallet)
 
-  // Handle income update
+  // Handle expense update
   const [isSaving, setIsSaving] = useState(false);
 
+  // Handle exits page button
+  const handleExitClick = () => {
+    navigate(-1)
+  }
+
   useEffect(() => {
-    // Perform the GET request to retrieve a list of wallets
+    // Perform the POST to retrieve a list wallets
     axios.get('http://localhost:5000/wallet')
     .then(response => {
       console.log('A list of available wallets: ', response.data['wallets']);
@@ -53,53 +64,58 @@ export default function EditIncome() {
   useEffect(() => {
     if (wallets.length > 0) {
       // Find the details of selected category from a list of categories
-      const initialCategory = categories.find(category => category.name === updatedIncomeDetails.source);
+      const initialCategory = categories.find(category => category.name === updatedExpenseDetails.category);
       setSelectedCategory(initialCategory || { id: null, name: '' });
       // Find the details of selected wallet from a list of wallets
-      const initialWallet = wallets.find(wallet => wallet.wallet_id === updatedIncomeDetails.wallet_id);
+      const initialWallet = wallets.find(wallet => wallet.wallet_id === updatedExpenseDetails.wallet_id);
       setSelectedWallet(initialWallet || { wallet_id: null, type: '' });
     }
-  }, [updatedIncomeDetails, wallets]);
+  }, [updatedExpenseDetails, wallets]);
 
   const handleSave = async () => {
     // Convert date to ISO 8601 format
-    const isoDate = new Date(updatedIncomeDetails.date).toISOString();
+    const isoDate = new Date(updatedExpenseDetails.date).toISOString();
     // Create a new object excluding the _id field
-    const { _id, ...detailsWithoutId } = updatedIncomeDetails;
-    const updatedDetails = { ...detailsWithoutId, amount: Number(updatedIncomeDetails.amount), date: isoDate };
+    const { _id, ...detailsWithoutId } = updatedExpenseDetails;
+    const updatedDetails = { ...detailsWithoutId, amount: Number(updatedExpenseDetails.amount), date: isoDate };
     console.log(updatedDetails);
     setIsSaving(true);
 
     try {
-      // Perform the PUT request with updatedIncomeDetails
-      await axios.put(`http://localhost:5000/income/${incomeDetails._id}`, updatedDetails);
-      console.log('Saving income:', updatedDetails);
+      // Perform the PUT request with updatedExpenseDetails
+      axios.put(`http://localhost:5000/expense/${expenseDetails._id}`, updatedDetails)
+      .then((response) => console.log(response.data["message"]))
+      .catch((error) => console.log(error))
+      console.log('Saving expense:', updatedDetails);
+      // await axios.put('api/endpoint', updatedExpenseDetails);
     } catch (error) {
-      console.error('Error saving income:', error);
+      console.error('Error saving expense:', error);
     } finally {
       setIsSaving(false);
     }
   };
-  
-  // Handle exits page button
-  const handleExitClick = () => {
-    navigate('/transaction')
-  }
+
   return (
     <div>
+      <button 
+          onClick={handleExitClick}
+          className='font-bold text-blue-500'
+        >
+          Return
+      </button>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSave();
         }}
-        className='grid grid-cols-1 gap-4'
+        className='w-96 grid grid-cols-1 gap-4'
       >
         <label className='block text-sm font-medium leading-6 text-gray-600'>
           Date:
           <input
             type='date'
-            value={updatedIncomeDetails?.date || ''}
-            onChange={(e) => setUpdatedIncomeDetails({ ...updatedIncomeDetails, date: e.target.value })}
+            value={updatedExpenseDetails?.date || ''}
+            onChange={(e) => setUpdatedExpenseDetails({ ...updatedExpenseDetails, date: e.target.value })}
             className='block w-full mt-1 rounded-md border-gray-300 py-1.5 pl-4 pr-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
           />
         </label>
@@ -109,14 +125,14 @@ export default function EditIncome() {
             value={selectedCategory}
             onChange={(category) => {
               setSelectedCategory(category);
-              setUpdatedIncomeDetails({ ...updatedIncomeDetails, source: category.name });
+              setUpdatedExpenseDetails({ ...updatedExpenseDetails, category: category.name });
             }}
           >
-            <Label className='block text-sm font-medium leading-6 text-gray-600'>Source</Label>
+            <Label className='block text-sm font-medium leading-6 text-gray-600'>Category</Label>
             <div className='relative mt-2'>
               <ListboxButton className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6'>
                 <span className='flex items-center'>
-                  <span className='ml-3 block truncate'>{selectedCategory?.name || 'Select a source'}</span>
+                  <span className='ml-3 block truncate'>{selectedCategory?.name || 'Select a category'}</span>
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
                   <ChevronUpDownIcon aria-hidden='true' className='h-5 w-5 text-gray-400' />
@@ -151,8 +167,8 @@ export default function EditIncome() {
           Amount:
           <input
             type='number'
-            value={updatedIncomeDetails?.amount || ''}
-            onChange={(e) => setUpdatedIncomeDetails({ ...updatedIncomeDetails, amount: e.target.value })}
+            value={updatedExpenseDetails?.amount || ''}
+            onChange={(e) => setUpdatedExpenseDetails({ ...updatedExpenseDetails, amount: e.target.value })}
             className='block w-full rounded-md border-0 py-1.5 pl-4 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
           />
         </label>
@@ -161,18 +177,18 @@ export default function EditIncome() {
           Description:
           <input
             type='text'
-            value={updatedIncomeDetails?.description || ''}
-            onChange={(e) => setUpdatedIncomeDetails({ ...updatedIncomeDetails, description: e.target.value })}
+            value={updatedExpenseDetails?.description || ''}
+            onChange={(e) => setUpdatedExpenseDetails({ ...updatedExpenseDetails, description: e.target.value })}
             className='block w-full mt-1 rounded-md border-gray-300 py-1.5 pl-4 pr-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
           />
         </label>
 
         <label>
-          <Listbox
+        <Listbox
             value={selectedWallet}
             onChange={(wallet) => {
               setSelectedWallet(wallet);
-              setUpdatedIncomeDetails({ ...updatedIncomeDetails, wallet_id: wallet.wallet_id });
+              setUpdatedExpenseDetails({ ...updatedExpenseDetails, wallet_id: wallet.wallet_id });
             }}
           >
             <Label className='block text-sm font-medium leading-6 text-gray-600'>Wallet</Label>
@@ -210,12 +226,12 @@ export default function EditIncome() {
         </label>
 
         <button
-          type='submit'
-          className={`mt-2 p-2 rounded ${isSaving ? 'bg-gray-500' : 'bg-blue-500'} text-white`}
-          disabled={isSaving}
+        type='submit'
+        className={`mt-2 p-2 rounded ${isSaving ? 'bg-gray-500' : 'bg-blue-500'} text-white`}
+        disabled={isSaving}
         >
-          {isSaving ? 'Saving...' : 'Save'}
-        </button>
+        {isSaving ? 'Saving...' : 'Save'}
+      </button>
       </form>
     </div>
   );

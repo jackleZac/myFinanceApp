@@ -12,12 +12,12 @@ export default function IncomesList() {
   // Handle Add button
   const handleAddClick = () => {
     // Navigate to addTransaction page
-    navigate('/add-income')
+    navigate('/income/add-income')
   };
 
   // Handle Edit button
   const handleEditClick = (income) => {
-    navigate(`/edit-transaction/${income._id}`);
+    navigate('/income/edit-transaction/', { state: { income } });
   };
 
   useEffect(() => {

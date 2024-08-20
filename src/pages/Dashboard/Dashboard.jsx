@@ -1,6 +1,6 @@
 import React from 'react'
-import  Wallet  from '../components/Wallet'
-import ExpensesList from '../components/ExpensesList'
+import  Wallet  from '../../components/Wallet'
+import ExpensesList from '../../components/ExpensesList'
 
 
 export default function Dashboard() {

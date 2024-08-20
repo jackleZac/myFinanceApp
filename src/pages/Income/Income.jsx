@@ -1,5 +1,5 @@
 import React from 'react'
-import IncomesList from '../components/IncomesList'
+import IncomesList from '../../components/IncomesList'
 
 export default function Income() {
   return (

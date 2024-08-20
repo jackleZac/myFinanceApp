@@ -67,7 +67,7 @@ export default function AddExpense() {
   const navigate = useNavigate();
   // Handle exits page button
   const handleExitClick = () => {
-    navigate('/transaction')
+    navigate(-1)
   }
 
   return (
@@ -197,7 +197,7 @@ export default function AddExpense() {
 
         <button
           type='submit'
-          className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+          className='inline-flex justify-center bg-cyan-700 hover:bg-cyan-800 text-white px-4 py-2 rounded-lg transition-all duration-200'
           disabled={isSaving}
         >
           {isSaving ? 'Saving...' : 'Save'}

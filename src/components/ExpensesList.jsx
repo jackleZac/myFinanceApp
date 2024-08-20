@@ -10,12 +10,12 @@ export default function ExpensesList() {
   // Handle Add button
   const handleAddClick = () => {
     // Navigate to addTransaction page
-    navigate('/add-transaction')
+    navigate('/transaction/add-transaction')
   };
 
   // Handle Edit button
   const handleEditClick = (expense) => {
-    navigate('/edit-transaction/', { state: { expense } });
+    navigate('/transaction/edit-transaction', { state: { expense } });
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function ExpensesList() {
     <div className=''>
       <div className='py-6 flex justify-between items-center bg-[#f3f4f6] px-4'>
         <div>
-          <h2 className='text-lg font-semibold text-gray-800'>Incomes</h2>
+          <h2 className='text-lg font-semibold text-gray-800'>Transactions</h2>
           <p className='text-sm text-gray-500'>in July 2024</p>
         </div>
         <button 
