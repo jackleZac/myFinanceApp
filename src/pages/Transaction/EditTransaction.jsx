@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { ArrowLeftIcon, CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
 const categories = [
   { id: 1, name: 'Housing', avatar: '' },
@@ -72,6 +73,7 @@ export default function EditExpense() {
     }
   }, [updatedExpenseDetails, wallets]);
 
+  // Handle save button
   const handleSave = async () => {
     // Convert date to ISO 8601 format
     const isoDate = new Date(updatedExpenseDetails.date).toISOString();
@@ -95,6 +97,21 @@ export default function EditExpense() {
     }
   };
 
+  // Handle delete button
+  const handleDelete = async () => {
+    try {
+      // Perform the PUT request with updatedExpenseDetails
+      axios.delete(`http://localhost:5000/expense/${expenseDetails._id}`)
+      .then((response) => console.log(response.data["message"]))
+      .catch((error) => console.log(error))
+      console.log('Deleting expense:', expenseDetails);
+    } catch (error) {
+      console.error('Error deleting expense:', error);
+    } finally {
+      navigate(-1);
+    }
+  }
+
   return (
     <div>
       <button 
@@ -110,6 +127,14 @@ export default function EditExpense() {
         }}
         className='w-96 mx-auto px-8 py-12 grid grid-cols-1 gap-4 border-2 border-gray-100 rounded-lg shadow-lg'
       >
+        <div className='w-full'>
+          <button
+            onClick={handleDelete}
+            className='text-blue-500'
+          >
+            <TrashIcon className='size-6 mx-2' />
+          </button>
+        </div>
         <label className='block text-sm font-medium leading-6 text-gray-600'>
           Date:
           <input
