@@ -125,14 +125,14 @@ export default function EditExpense() {
           e.preventDefault();
           handleSave();
         }}
-        className='w-96 mx-auto px-8 py-12 grid grid-cols-1 gap-4 border-2 border-gray-100 rounded-lg shadow-lg'
+        className='w-96 mx-auto px-8 pt-10 pb-12 grid grid-cols-1 gap-4 border-2 border-gray-100 rounded-lg shadow-lg'
       >
-        <div className='w-full'>
+        <div className='w-full flex flex-row-reverse'>
           <button
             onClick={handleDelete}
-            className='text-blue-500'
+            className='w-12 text-blue-500 border-2 border-transparent hover:border-blue-500 rounded-lg'
           >
-            <TrashIcon className='size-6 mx-2' />
+            <TrashIcon className='size-6 mx-auto my-2' />
           </button>
         </div>
         <label className='block text-sm font-medium leading-6 text-gray-600'>

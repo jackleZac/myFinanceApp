@@ -15,20 +15,20 @@ import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="flex">
+    <div className='flex'>
       <Sidebar />
-      <main className="flex-1">
+      <main className='flex-1'>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/income" element={<Income />} />
-          <Route path="/income/add-income" element={<AddIncome />} />
-          <Route path="/income/edit-income" element={<EditIncome />} />
-          <Route path="/transaction" element={<Transaction />} />
-          <Route path="/transaction/add-transaction" element={<AddTransaction />} />
-          <Route path="/transaction/edit-transaction" element={<EditTransaction />} />
+          <Route path='/' element={<Dashboard />} />
+          <Route path='/income' element={<Income />} />
+          <Route path='/income/add-income' element={<AddIncome />} />
+          <Route path='/income/edit-income' element={<EditIncome />} />
+          <Route path='/transaction' element={<Transaction />} />
+          <Route path='/transaction/add-transaction' element={<AddTransaction />} />
+          <Route path='/transaction/edit-transaction' element={<EditTransaction />} />
           <Route path='add-wallet' element={<AddWallet />} />
-          <Route path="/investment" element={<Investment />} />
-          <Route path="/news" element={<News />} />
+          <Route path='/investment' element={<Investment />} />
+          <Route path='/news' element={<News />} />
         </Routes>
       </main>
     </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function IncomesList() {
@@ -17,7 +16,7 @@ export default function IncomesList() {
 
   // Handle Edit button
   const handleEditClick = (income) => {
-    navigate('/income/edit-transaction/', { state: { income } });
+    navigate('/income/edit-income', { state: { income } });
   };
 
   useEffect(() => {
