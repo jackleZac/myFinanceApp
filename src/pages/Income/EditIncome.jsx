@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { ArrowLeftIcon, CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
-const categories = [
+const sources = [
   { id: 1, name: 'Salary', avatar: '' },
   { id: 2, name: 'Investment', avatar: '' },
   { id: 3, name: 'Freelancing', avatar: '' },
   { id: 4, name: 'Gifts', avatar: '' },
   { id: 5, name: 'Other', avatar: '' },
-  // Add or modify categories based on your needs
 ];
 
 export default function EditIncome() {
@@ -26,8 +25,8 @@ export default function EditIncome() {
   const [updatedIncomeDetails, setUpdatedIncomeDetails] = useState({ ...income });
 
   // Get the details of selected category
-  const [selectedCategory, setSelectedCategory] = useState([])
-  console.log(selectedCategory)
+  const [selectedSource, setselectedSource] = useState([])
+  console.log(selectedSource)
 
   // Get the details of selected wallet
   const [wallets, setWallets] = useState([])
@@ -52,9 +51,9 @@ export default function EditIncome() {
 
   useEffect(() => {
     if (wallets.length > 0) {
-      // Find the details of selected category from a list of categories
-      const initialCategory = categories.find(category => category.name === updatedIncomeDetails.source);
-      setSelectedCategory(initialCategory || { id: null, name: '' });
+      // Find the details of selected category from a list of sources
+      const initialCategory = sources.find(category => category.name === updatedIncomeDetails.source);
+      setselectedSource(initialCategory || { id: null, name: '' });
       // Find the details of selected wallet from a list of wallets
       const initialWallet = wallets.find(wallet => wallet.wallet_id === updatedIncomeDetails.wallet_id);
       setSelectedWallet(initialWallet || { wallet_id: null, type: '' });
@@ -87,12 +86,18 @@ export default function EditIncome() {
   }
   return (
     <div>
+      <button 
+          onClick={handleExitClick}
+          className='w-24 py-4 px-2 ml-24 mt-12 flex flex-rows text-blue-500'
+        >
+          <ArrowLeftIcon className='size-6 mx-2'/><p className='block font-medium text-md hover:underline'>Back</p>
+      </button>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSave();
         }}
-        className='grid grid-cols-1 gap-4'
+        className='w-96 mx-auto px-8 py-12 grid grid-cols-1 gap-4 border-2 border-gray-100 rounded-lg shadow-lg'
       >
         <label className='block text-sm font-medium leading-6 text-gray-600'>
           Date:
@@ -106,9 +111,9 @@ export default function EditIncome() {
 
         <label>
           <Listbox
-            value={selectedCategory}
+            value={selectedSource}
             onChange={(category) => {
-              setSelectedCategory(category);
+              setselectedSource(category);
               setUpdatedIncomeDetails({ ...updatedIncomeDetails, source: category.name });
             }}
           >
@@ -116,7 +121,7 @@ export default function EditIncome() {
             <div className='relative mt-2'>
               <ListboxButton className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6'>
                 <span className='flex items-center'>
-                  <span className='ml-3 block truncate'>{selectedCategory?.name || 'Select a source'}</span>
+                  <span className='ml-3 block truncate'>{selectedSource?.name || 'Select a source'}</span>
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
                   <ChevronUpDownIcon aria-hidden='true' className='h-5 w-5 text-gray-400' />
@@ -125,7 +130,7 @@ export default function EditIncome() {
               <ListboxOptions
                 className='absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
               >
-                {categories.map((option) => (
+                {sources.map((option) => (
                   <ListboxOption
                     key={option.id}
                     value={option}
@@ -135,7 +140,7 @@ export default function EditIncome() {
                       <img alt='' src={option.avatar} className='h-5 w-5 flex-shrink-0 rounded-full' />
                       <span className='ml-3 block truncate'>{option.name}</span>
                     </div>
-                    {selectedCategory?.id === option.id && (
+                    {selectedSource?.id === option.id && (
                       <span className='absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600'>
                         <CheckIcon aria-hidden='true' className='h-5 w-5' />
                       </span>

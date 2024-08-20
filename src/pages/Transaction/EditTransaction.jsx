@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { ArrowLeftIcon, CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 const categories = [
   { id: 1, name: 'Housing', avatar: '' },
@@ -99,16 +99,16 @@ export default function EditExpense() {
     <div>
       <button 
           onClick={handleExitClick}
-          className='font-bold text-blue-500'
+          className='w-24 py-4 px-2 ml-24 mt-12 flex flex-rows text-blue-500'
         >
-          Return
+          <ArrowLeftIcon className='size-6 mx-2'/><p className='block font-medium text-md hover:underline'>Back</p>
       </button>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSave();
         }}
-        className='w-96 grid grid-cols-1 gap-4'
+        className='w-96 mx-auto px-8 py-12 grid grid-cols-1 gap-4 border-2 border-gray-100 rounded-lg shadow-lg'
       >
         <label className='block text-sm font-medium leading-6 text-gray-600'>
           Date:
