@@ -6,20 +6,20 @@ import { ArrowLeftIcon, CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20
 import { TrashIcon } from '@heroicons/react/24/outline'
 
 const categories = [
-  { id: 1, name: 'Housing', avatar: '' },
-  { id: 2, name: 'Transportation', avatar: '' },
-  { id: 3, name: 'Grocery', avatar: '' },
-  { id: 4, name: 'Health & Wellness', avatar: '' },
-  { id: 5, name: 'Insurance', avatar: '' },
-  { id: 6, name: 'Debt Payments', avatar: '' },
-  { id: 7, name: 'Savings & Investments', avatar: '' },
-  { id: 8, name: 'Entertainment', avatar: '' },
-  { id: 9, name: 'Education', avatar: '' },
-  { id: 10, name: 'Family & Childcare', avatar: '' },
-  { id: 11, name: 'Gifts & Donations', avatar: '' },
-  { id: 12, name: 'Miscellaneous', avatar: '' },
+  { id: 1, name: 'Dining Out' },
+  { id: 2, name: 'Transportation' },
+  { id: 3, name: 'Grocery' },
+  { id: 4, name: 'Health & Wellness' },
+  { id: 5, name: 'Insurance' },
+  { id: 6, name: 'Debt Payments' },
+  { id: 7, name: 'Savings & Investments' },
+  { id: 8, name: 'Entertainment' },
+  { id: 9, name: 'Education' },
+  { id: 10, name: 'Family & Childcare' },
+  { id: 11, name: 'Gifts & Donations' },
+  { id: 12, name: 'Miscellaneous' },
+  { id: 13, name: 'Housing' }
 ];
-
 export default function EditExpense() {
   const location = useLocation();
   const navigate = useNavigate();

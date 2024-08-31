@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { format } from 'date-fns';
 import axios from 'axios';
 
 export default function ExpensesList() {
-  const [expenses, setExpense] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   // Initialize useNavigate
   const navigate = useNavigate()
 
@@ -22,9 +23,21 @@ export default function ExpensesList() {
     // Perform a GET request to Flask app
     axios.get('http://localhost:5000/expense')
     .then(response => {
-      // Update the current state of expenses
-      console.log(response.data);
-      setExpense(response.data['expenses']);
+      // Extract the list of expenses from response
+      const list_of_expenses = response.data['expenses'];
+
+      try {
+        // Update the date format of each expense
+        const formattedExpenses = list_of_expenses.map((expense) => ({
+          ...expense,
+          date: format(new Date(expense.date), 'yyyy-MM-dd')  // Convert date to yyyy-mm-dd format
+        }));
+
+        // Update the current state of expenses
+        setExpenses(formattedExpenses);
+      } catch (error) {
+        console.log('An error occurred when converting date to ISO', error);
+      }
     })
     .catch(error => {
       console.error('There was an error fetching the expenses!', error)

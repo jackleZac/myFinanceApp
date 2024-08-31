@@ -31,7 +31,7 @@ export default function AddExpense() {
   });
   const [selectedCategory, setSelectedCategory] = useState(categories[0]); // State for selected category
   const [wallets, setWallets] = useState([]); // State for all existing wallets
-  const [selectedWallet, setSelectedWallet] = useState(null); // State for selected wallet
+  const [selectedWallet, setSelectedWallet] = useState(''); // State for selected wallet
   const [isSaving, setIsSaving] = useState(false);
 
   const [receipt, setReceipt] = useState(null); // State for receipt file
@@ -48,7 +48,7 @@ export default function AddExpense() {
       });
   }, []);
 
-  const handleSave = async () => {
+  const hanleSaveExpense = async () => {
     const isoDate = new Date(newExpenseDetails.date).toISOString();
     const newDetails = { 
       ...newExpenseDetails, 
@@ -70,10 +70,10 @@ export default function AddExpense() {
   };
 
   const handleReceiptChange = (e) => {
-    setReceipt(e.target.files[0]);
+    setReceipt(e.target.files[0] || null);
   };
 
-  const handleScanReceipt = async () => {
+  const handleReceiptSubmit = async () => {
     if (!receipt) return;
     setIsScanning(true);
     const formData = new FormData();
@@ -85,19 +85,19 @@ export default function AddExpense() {
         }
       });
 
-      const { amount, date, category, description } = response.data;
+      const { amount, date, description } = response.data;
+      console.log(amount)
+      console.log(date)
+      console.log(description)
 
       // Update the expense details with the scanned data
       setNewExpenseDetails({
         ...newExpenseDetails,
         amount: amount || '',
-        date: date ? new Date(date).toISOString().split('T')[0] : '', // Convert to yyyy-mm-dd format
+        date: date, 
         description: description || '',
       });
 
-      // Set category if it exists
-      const matchedCategory = categories.find(cat => cat.name === category);
-      if (matchedCategory) setSelectedCategory(matchedCategory);
     } catch (error) {
       console.error('Error scanning receipt:', error);
     } finally {
@@ -130,7 +130,7 @@ export default function AddExpense() {
           <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSave();
+            hanleSaveExpense();
           }}
           className='grid grid-cols-1 gap-4'
         >
@@ -250,7 +250,10 @@ export default function AddExpense() {
           >
             {isSaving ? 'Saving...' : 'Save'}
           </button>
-          <button onClick={handleShowScanForm}>
+          <button 
+          onClick={handleShowScanForm}
+          className='text-sm font-medium text-gray-700 hover:underline'
+          >
               Or upload a receipt
           </button>
           </form>
@@ -258,7 +261,7 @@ export default function AddExpense() {
           <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleReceiptChange();
+            handleReceiptSubmit();
           }}
           className='grid grid-cols-1 gap-4'
         >
@@ -267,18 +270,21 @@ export default function AddExpense() {
             <input
               type='file'
               accept='image/*'
-              className='mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer focus:outline-none'
+              onChange={handleReceiptChange}
+              className='mt-2 py-1.5 pl-1.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer focus:outline-none'
             />
             <button 
-              type='button'
-              onClick={handleScanReceipt}
-              disabled={!receipt || isScanning}
+              type='submit'
+              disabled={isScanning}
               className='mt-2 w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             >
               {isScanning ? 'Scanning...' : 'Scan Receipt'}
             </button>
-            <button onClick={handleShowAddExpenseForm}>
-              Back to manual entry
+            <button 
+              onClick={handleShowAddExpenseForm}
+              className='mt-4 w-full'
+            >
+              <p className='mx-auto hover:underline '>Back to manual entry</p>
             </button>
           </label>
           </form>
