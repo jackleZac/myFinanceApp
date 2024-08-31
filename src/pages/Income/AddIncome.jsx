@@ -29,7 +29,7 @@ export default function AddIncome() {
     axios.get('http://localhost:5000/wallet')
       .then(response => {
         setWallets(response.data['wallets']);
-        setSelectedWallet(response.data['wallets'][0]);
+        setWallets(response.data['wallets']);
       })
       .catch(error => {
         console.error('Error fetching wallets:', error);
