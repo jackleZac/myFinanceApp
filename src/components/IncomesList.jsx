@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 import axios from 'axios';
 
 export default function IncomesList() {
@@ -24,8 +25,19 @@ export default function IncomesList() {
     axios.get('http://localhost:5000/income')
     .then(response => {
       // Update the current state of incomes
-      console.log(response.data);
-      setIncomes(response.data['incomes']);
+      const list_of_incomes = response.data['incomes'];
+      try {
+        // Update the date format of each expense
+        const formattedIncomes = list_of_incomes.map((income) => ({
+          ...income,
+          date: format(new Date(income.date), 'yyyy-MM-dd')  // Convert date to yyyy-mm-dd format
+        }));
+
+        // Update the current state of expenses
+        setIncomes(formattedIncomes);
+      } catch (error) {
+        console.log('An error occurred when converting date to ISO', error);
+      }
     })
     .catch(error => {
       console.error('There was an error fetching the incomes!', error)
